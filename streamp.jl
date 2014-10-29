@@ -71,6 +71,13 @@ function main()
     println(" The *best* time for each kernel (excluding the first iteration)"); 
     println(" will be used to compute the reported bandwidth.");
 
+    if mod(STREAM_ARRAY_SIZE,nworkers()) != 0
+        println("*****  ERROR: ******");
+        println("      The preprocessor variable STREAM_ARRAY_SIZE is not a multiple of the number of worker processes.");
+        println("*****  ERROR: ******");
+        return -1;
+    end
+
 #   Get initial value for system clock.
     if ~isdefined(:PARALLEL) # because we have already initialised while creating DArray
         for j=1:STREAM_ARRAY_SIZE
@@ -221,11 +228,18 @@ function checkSTREAMresults()
   	aSumErr = 0.0;
   	bSumErr = 0.0;
   	cSumErr = 0.0;
-	  for j=1:STREAM_ARRAY_SIZE
-    		aSumErr += abs(a[j] - aj);
-		    bSumErr += abs(b[j] - bj);
-    		cSumErr += abs(c[j] - cj);
-	  end
+    
+    if isdefined(:PARALLEL)
+        aSumErr = reduce(+, map(fetch,{ (@spawnat p calcErr(localpart(a),aj)) for p=procs(a) }));
+        bSumErr = reduce(+, map(fetch,{ (@spawnat p calcErr(localpart(b),bj)) for p=procs(b) }));
+        cSumErr = reduce(+, map(fetch,{ (@spawnat p calcErr(localpart(c),cj)) for p=procs(c) }));
+    else
+    	  for j=1:STREAM_ARRAY_SIZE
+        		aSumErr += abs(a[j] - aj);
+		        bSumErr += abs(b[j] - bj);
+        		cSumErr += abs(c[j] - cj);
+    	  end
+    end
 
     aAvgErr = aSumErr / STREAM_ARRAY_SIZE;
   	bAvgErr = bSumErr / STREAM_ARRAY_SIZE;
@@ -344,6 +358,15 @@ end
     for i=1:size(a)[1]
   	    a[i] = b[i]+scalar*c[i];
     end
+end
+
+~isdefined(:PARALLEL) ||
+@everywhere function calcErr(a::Array,aj::Float64)
+    sum = 0.0
+    for i=1:size(a)[1]
+  	    sum += a[i] - aj;
+    end
+    return sum;
 end
 
 # end of stubs for the "parallel" versions of the kernels
