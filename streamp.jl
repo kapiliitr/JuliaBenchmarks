@@ -1,7 +1,7 @@
 #!/nethome/kagarwal39/julia-0.3.1/julia/julia
 
-NTIMES=2;
-STREAM_ARRAY_SIZE = 5000000;
+addprocs(4);
+PARALLEL=1;
 
 isdefined(:STREAM_ARRAY_SIZE) || (STREAM_ARRAY_SIZE =	10000000);
 
@@ -22,9 +22,15 @@ isdefined(:MAX) || (MAX(x,y)=((x)>(y)?(x):(y)));
 
 isdefined(:STREAM_TYPE) || (STREAM_TYPE = Float64);
 
-a = Array(STREAM_TYPE,STREAM_ARRAY_SIZE+OFFSET);
-b = Array(STREAM_TYPE,STREAM_ARRAY_SIZE+OFFSET);
-c = Array(STREAM_TYPE,STREAM_ARRAY_SIZE+OFFSET);
+if ~isdefined(:PARALLEL)
+    a = Array(STREAM_TYPE,STREAM_ARRAY_SIZE+OFFSET);
+    b = Array(STREAM_TYPE,STREAM_ARRAY_SIZE+OFFSET);
+    c = Array(STREAM_TYPE,STREAM_ARRAY_SIZE+OFFSET);
+else
+    a = dfill(1.0,STREAM_ARRAY_SIZE+OFFSET);
+    b = dfill(2.0,STREAM_ARRAY_SIZE+OFFSET);
+    c = dfill(0.0,STREAM_ARRAY_SIZE+OFFSET);
+end
 
 avgtime = fill(0.0,4);
 maxtime = fill(0.0,4);
@@ -66,10 +72,12 @@ function main()
     println(" will be used to compute the reported bandwidth.");
 
 #   Get initial value for system clock.
-    @sync @parallel for j=1:STREAM_ARRAY_SIZE
-        a[j] = 1.0;
-        b[j] = 2.0;
-        c[j] = 0.0;
+    if ~isdefined(:PARALLEL) # because we have already initialised while creating DArray
+        for j=1:STREAM_ARRAY_SIZE
+            a[j] = 1.0;
+            b[j] = 2.0;
+            c[j] = 0.0;
+        end
     end
 
     println(HLINE);
@@ -81,8 +89,12 @@ function main()
       	quantum = 1;
     end
 
-    t = @elapsed @sync @parallel for j = 1:STREAM_ARRAY_SIZE
-    		a[j] = 2.0E0 * a[j];
+    if isdefined(:PARALLEL)
+        t = @elapsed @sync { (@spawnat p double(localpart(a))) for p=procs(a) }
+    else
+        t = @elapsed for j = 1:STREAM_ARRAY_SIZE
+        		a[j] = 2.0E0 * a[j];
+        end
     end
     t = 1.0E6 * t;    
 
@@ -101,38 +113,37 @@ function main()
 #   --- MAIN LOOP --- repeat test cases NTIMES times ---
 
     times = Array(Float64,(4,NTIMES))
-    scalar = 3.0;
+    @everywhere scalar = 3.0;
  
     for k=1:NTIMES
-    
-        if isdefined(:TUNED)
-            times[1,k] = @elapsed tuned_STREAM_Copy();
+        if isdefined(:PARALLEL)
+            times[1,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Copy(localpart(a),localpart(c))) for p=procs(a) }
         else
-            times[1,k] = @elapsed @sync @parallel for j=1:STREAM_ARRAY_SIZE
+            times[1,k] = @elapsed for j=1:STREAM_ARRAY_SIZE
                               c[j] = a[j];
                           end
         end
       
-        if isdefined(:TUNED)
-            times[2,k] = @elapsed tuned_STREAM_Scale(scalar);
+        if isdefined(:PARALLEL)
+            times[2,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Scale(localpart(c),localpart(b))) for p=procs(c) }
         else
-            times[2,k] = @elapsed @sync @parallel for j=1:STREAM_ARRAY_SIZE
+            times[2,k] = @elapsed for j=1:STREAM_ARRAY_SIZE
                               b[j] = scalar*c[j];
                           end
         end        
 
-        if isdefined(:TUNED)
-            times[3,k] = @elapsed tuned_STREAM_Add();
+        if isdefined(:PARALLEL)
+            times[3,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Add(localpart(a),localpart(b),localpart(c))) for p=procs(a) }
         else
-            times[3,k] = @elapsed @sync @parallel for j=1:STREAM_ARRAY_SIZE
+            times[3,k] = @elapsed for j=1:STREAM_ARRAY_SIZE
                               c[j] = a[j]+b[j];
                           end
         end
 
-        if isdefined(:TUNED)
-            times[4,k] = @elapsed tuned_STREAM_Triad(scalar);
+        if isdefined(:PARALLEL)
+            times[4,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Triad(localpart(b),localpart(c),localpart(a))) for p=procs(b) }
         else
-            times[4,k] = @elapsed @sync @parallel for j=1:STREAM_ARRAY_SIZE
+            times[4,k] = @elapsed for j=1:STREAM_ARRAY_SIZE
                                a[j] = b[j]+scalar*c[j];
                           end
         end
@@ -298,37 +309,44 @@ function checkSTREAMresults()
     end
 end
 
-# stubs for "tuned" versions of the kernels
+# stubs for "parallel" versions of the kernels
 
-isdefined(:TUNED) ||
-function tuned_STREAM_Copy()
-    @sync @parallel for j=1:STREAM_ARRAY_SIZE
-        c[j] = a[j];
+~isdefined(:PARALLEL) ||
+@everywhere function double(a::Array)
+    for i=1:size(a)[1]
+        a[i] = 2*a[i]
     end
 end
 
-isdefined(:TUNED) ||
-function tuned_STREAM_Scale(scalar::STREAM_TYPE)
-	  @sync @parallel for j=1:STREAM_ARRAY_SIZE
-  	    b[j] = scalar*c[j];
+~isdefined(:PARALLEL) ||
+@everywhere function parallel_STREAM_Copy(a::Array,c::Array)
+    for i=1:size(c)[1]
+        c[i] = a[i]
     end
 end
 
-isdefined(:TUNED) ||
-function tuned_STREAM_Add()
-	  @sync @parallel for j=1:STREAM_ARRAY_SIZE
-  	    c[j] = a[j]+b[j];
+~isdefined(:PARALLEL) ||
+@everywhere function parallel_STREAM_Scale(c::Array,b::Array)
+    for i=1:size(b)[1]
+  	    b[i] = scalar*c[i];
     end
 end
 
-isdefined(:TUNED) ||
-function tuned_STREAM_Triad(scalar::STREAM_TYPE)
-	  @sync @parallel for j=1:STREAM_ARRAY_SIZE
-  	    a[j] = b[j]+scalar*c[j];
+~isdefined(:PARALLEL) ||
+@everywhere function parallel_STREAM_Add(a::Array,b::Array,c::Array)
+    for i=1:size(c)[1]
+  	    c[i] = a[i]+b[i];
     end
 end
 
-# end of stubs for the "tuned" versions of the kernels
+~isdefined(:PARALLEL) ||
+@everywhere function parallel_STREAM_Triad(b::Array,c::Array,a::Array)
+    for i=1:size(a)[1]
+  	    a[i] = b[i]+scalar*c[i];
+    end
+end
+
+# end of stubs for the "parallel" versions of the kernels
 
 # Calling the main function
 main()
