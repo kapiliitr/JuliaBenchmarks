@@ -1,7 +1,7 @@
 #!/nethome/kagarwal39/julia-0.3.1/julia/julia
 
-#addprocs(4);
-#const PARALLEL=1;
+addprocs(4);
+const PARALLEL = 1;
 const NTIMES = 3;
 const STREAM_ARRAY_SIZE = 5000000;
 
@@ -21,22 +21,16 @@ isdefined(:MIN) || (MIN(x,y)=((x)<(y)?(x):(y)));
 isdefined(:MAX) || (MAX(x,y)=((x)>(y)?(x):(y)));
 
 function main()
-    global NTIMES;
-    global STREAM_ARRAY_SIZE;
-    global OFFSET;    
-    global STREAM_TYPE;
-
     HLINE = "-------------------------------------------------------------";
 
+    a = fill(1.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+    b = fill(2.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+    c = fill(0.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
 
-    if ~isdefined(:PARALLEL)
-        a = fill(1.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
-        b = fill(2.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
-        c = fill(0.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
-    else
-        a = dfill(1.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
-        b = dfill(2.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
-        c = dfill(0.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+    if isdefined(:PARALLEL)
+        a = distribute(a);
+        b = distribute(b);
+        c = distribute(c);
     end
 
     avgtime = fill(0.0,4);
@@ -118,8 +112,9 @@ function main()
 
     times = Array(Float64,(4,NTIMES::Int64))
     scalar = 3.0;
- 
+
     for k=1:NTIMES::Int64
+
         if isdefined(:PARALLEL)
             times[1,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Copy(localpart(a),localpart(c))) for p=procs(a) }
         else
@@ -204,8 +199,6 @@ function checktick()
 end
 
 function checkSTREAMresults(a,b,c)
-    global NTIMES;
-    global STREAM_ARRAY_SIZE;
 
 # reproduce initialization
   	aj = 1.0;
@@ -362,7 +355,7 @@ end
 @everywhere function calcErr(a::Array,aj::Float64)
     sum = 0.0
     for i=1:size(a)[1]
-  	    sum += a[i] - aj;
+  	    sum += abs(a[i] - aj);
     end
     return sum;
 end
