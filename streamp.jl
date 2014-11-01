@@ -1,7 +1,9 @@
 #!/nethome/kagarwal39/julia-0.3.1/julia/julia
 
-addprocs(4);
-PARALLEL=1;
+#addprocs(4);
+#const PARALLEL=1;
+NTIMES = 3;
+STREAM_ARRAY_SIZE = 5000000;
 
 isdefined(:STREAM_ARRAY_SIZE) || (STREAM_ARRAY_SIZE =	10000000);
 
@@ -12,40 +14,44 @@ if isdefined(:NTIMES)
 end
 
 isdefined(:NTIMES) || (NTIMES =	10);
-
 isdefined(:OFFSET) || (OFFSET =	0);
-
-HLINE = "-------------------------------------------------------------";
+isdefined(:STREAM_TYPE) || (STREAM_TYPE = Float64);
 
 isdefined(:MIN) || (MIN(x,y)=((x)<(y)?(x):(y)));
 isdefined(:MAX) || (MAX(x,y)=((x)>(y)?(x):(y)));
 
-isdefined(:STREAM_TYPE) || (STREAM_TYPE = Float64);
-
-if ~isdefined(:PARALLEL)
-    a = Array(STREAM_TYPE,STREAM_ARRAY_SIZE+OFFSET);
-    b = Array(STREAM_TYPE,STREAM_ARRAY_SIZE+OFFSET);
-    c = Array(STREAM_TYPE,STREAM_ARRAY_SIZE+OFFSET);
-else
-    a = dfill(1.0,STREAM_ARRAY_SIZE+OFFSET);
-    b = dfill(2.0,STREAM_ARRAY_SIZE+OFFSET);
-    c = dfill(0.0,STREAM_ARRAY_SIZE+OFFSET);
-end
-
-avgtime = fill(0.0,4);
-maxtime = fill(0.0,4);
-mintime = {realmax(Float64),realmax(Float64),realmax(Float64),realmax(Float64)};
-
-label = {"Copy:      ", "Scale:     ","Add:       ", "Triad:     "};
-
-bytes = {
-    2 * sizeof(STREAM_TYPE) * STREAM_ARRAY_SIZE,
-    2 * sizeof(STREAM_TYPE) * STREAM_ARRAY_SIZE,
-    3 * sizeof(STREAM_TYPE) * STREAM_ARRAY_SIZE,
-    3 * sizeof(STREAM_TYPE) * STREAM_ARRAY_SIZE
-    };
-
 function main()
+    global NTIMES;
+    global STREAM_ARRAY_SIZE;
+    global OFFSET;    
+    global STREAM_TYPE;
+
+    HLINE = "-------------------------------------------------------------";
+
+
+    if ~isdefined(:PARALLEL)
+        a = Array(STREAM_TYPE,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+        b = Array(STREAM_TYPE,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+        c = Array(STREAM_TYPE,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+    else
+        a = dfill(1.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+        b = dfill(2.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+        c = dfill(0.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+    end
+
+    avgtime = fill(0.0,4);
+    maxtime = fill(0.0,4);
+    mintime = {realmax(Float64),realmax(Float64),realmax(Float64),realmax(Float64)};
+
+    label = {"Copy:      ", "Scale:     ","Add:       ", "Triad:     "};
+
+    bytes = {
+        2 * sizeof(STREAM_TYPE) * STREAM_ARRAY_SIZE::Int64,
+        2 * sizeof(STREAM_TYPE) * STREAM_ARRAY_SIZE::Int64,
+        3 * sizeof(STREAM_TYPE) * STREAM_ARRAY_SIZE::Int64,
+        3 * sizeof(STREAM_TYPE) * STREAM_ARRAY_SIZE::Int64
+        };
+
 #    --- SETUP --- determine precision and check timing ---
 
     println(HLINE);
@@ -60,18 +66,18 @@ function main()
         println("*****  WARNING: ******");
         println("      It appears that you set the preprocessor variable N when compiling this code.");
         println("      This version of the code uses the preprocesor variable STREAM_ARRAY_SIZE to control the array size");
-        println("      Reverting to default value of STREAM_ARRAY_SIZE=",STREAM_ARRAY_SIZE);
+        println("      Reverting to default value of STREAM_ARRAY_SIZE=",STREAM_ARRAY_SIZE::Int64);
         println("*****  WARNING: ******");
     end
 
-    println("Array size = ",STREAM_ARRAY_SIZE," (elements), Offset = ",OFFSET," (elements)");
-    println("Memory per array = ",BytesPerWord * (STREAM_ARRAY_SIZE / 1024.0/1024.0)," MiB (= ",BytesPerWord * (STREAM_ARRAY_SIZE / 1024.0/1024.0/1024.0)," GiB)");
-    println("Total memory required = ",(3.0 * BytesPerWord) * (STREAM_ARRAY_SIZE / 1024.0/1024.)," MiB (= ",(3.0 * BytesPerWord) * (STREAM_ARRAY_SIZE / 1024.0/1024.0/1024.0)," GiB)");
-    println("Each kernel will be executed ",NTIMES," times.");
+    println("Array size = ",STREAM_ARRAY_SIZE::Int64," (elements), Offset = ",OFFSET::Int64," (elements)");
+    println("Memory per array = ",BytesPerWord * (STREAM_ARRAY_SIZE::Int64 / 1024.0/1024.0)," MiB (= ",BytesPerWord * (STREAM_ARRAY_SIZE::Int64 / 1024.0/1024.0/1024.0)," GiB)");
+    println("Total memory required = ",(3.0 * BytesPerWord) * (STREAM_ARRAY_SIZE::Int64 / 1024.0/1024.)," MiB (= ",(3.0 * BytesPerWord) * (STREAM_ARRAY_SIZE::Int64 / 1024.0/1024.0/1024.0)," GiB)");
+    println("Each kernel will be executed ",NTIMES::Int64," times.");
     println(" The *best* time for each kernel (excluding the first iteration)"); 
     println(" will be used to compute the reported bandwidth.");
 
-    if mod(STREAM_ARRAY_SIZE,nworkers()) != 0
+    if mod(STREAM_ARRAY_SIZE::Int64,nworkers()) != 0
         println("*****  ERROR: ******");
         println("      The preprocessor variable STREAM_ARRAY_SIZE is not a multiple of the number of worker processes.");
         println("*****  ERROR: ******");
@@ -80,7 +86,7 @@ function main()
 
 #   Get initial value for system clock.
     if ~isdefined(:PARALLEL) # because we have already initialised while creating DArray
-        for j=1:STREAM_ARRAY_SIZE
+        for j=1:STREAM_ARRAY_SIZE::Int64
             a[j] = 1.0;
             b[j] = 2.0;
             c[j] = 0.0;
@@ -99,7 +105,7 @@ function main()
     if isdefined(:PARALLEL)
         t = @elapsed @sync { (@spawnat p double(localpart(a))) for p=procs(a) }
     else
-        t = @elapsed for j = 1:STREAM_ARRAY_SIZE
+        t = @elapsed for j = 1:STREAM_ARRAY_SIZE::Int64
         		a[j] = 2.0E0 * a[j];
         end
     end
@@ -119,22 +125,22 @@ function main()
     
 #   --- MAIN LOOP --- repeat test cases NTIMES times ---
 
-    times = Array(Float64,(4,NTIMES))
+    times = Array(Float64,(4,NTIMES::Int64))
     @everywhere scalar = 3.0;
  
-    for k=1:NTIMES
+    for k=1:NTIMES::Int64
         if isdefined(:PARALLEL)
             times[1,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Copy(localpart(a),localpart(c))) for p=procs(a) }
         else
-            times[1,k] = @elapsed for j=1:STREAM_ARRAY_SIZE
+            times[1,k] = @elapsed for j=1:STREAM_ARRAY_SIZE::Int64
                               c[j] = a[j];
                           end
         end
       
         if isdefined(:PARALLEL)
-            times[2,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Scale(localpart(c),localpart(b))) for p=procs(c) }
+            times[2,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Scale(localpart(c),localpart(b),scalar)) for p=procs(c) }
         else
-            times[2,k] = @elapsed for j=1:STREAM_ARRAY_SIZE
+            times[2,k] = @elapsed for j=1:STREAM_ARRAY_SIZE::Int64
                               b[j] = scalar*c[j];
                           end
         end        
@@ -142,15 +148,15 @@ function main()
         if isdefined(:PARALLEL)
             times[3,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Add(localpart(a),localpart(b),localpart(c))) for p=procs(a) }
         else
-            times[3,k] = @elapsed for j=1:STREAM_ARRAY_SIZE
+            times[3,k] = @elapsed for j=1:STREAM_ARRAY_SIZE::Int64
                               c[j] = a[j]+b[j];
                           end
         end
 
         if isdefined(:PARALLEL)
-            times[4,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Triad(localpart(b),localpart(c),localpart(a))) for p=procs(b) }
+            times[4,k] = @elapsed @sync { (@spawnat p parallel_STREAM_Triad(localpart(b),localpart(c),localpart(a),scalar)) for p=procs(b) }
         else
-            times[4,k] = @elapsed for j=1:STREAM_ARRAY_SIZE
+            times[4,k] = @elapsed for j=1:STREAM_ARRAY_SIZE::Int64
                                a[j] = b[j]+scalar*c[j];
                           end
         end
@@ -158,7 +164,7 @@ function main()
 
 #   --- SUMMARY ---
 
-    for k=2:NTIMES # note -- skip first iteration
+    for k=2:NTIMES::Int64 # note -- skip first iteration
 	      for j=1:4
 	          avgtime[j] = avgtime[j] + times[j,k];
       	    mintime[j] = MIN(mintime[j], times[j,k]);
@@ -168,22 +174,21 @@ function main()
 
     println("Function    Best Rate MB/s  Avg time     Min time     Max time");
     for j=1:4
-    		avgtime[j] = avgtime[j]/(NTIMES-1);
+    		avgtime[j] = avgtime[j]/(NTIMES::Int64-1);
         @printf("%s%12.1f  %11.6f  %11.6f  %11.6f\n", label[j],1.0E-06 * bytes[j]/mintime[j],avgtime[j],mintime[j],maxtime[j]);
     end
 
     println(HLINE);
 
 #   --- Check Results ---
-    checkSTREAMresults();
+    checkSTREAMresults(a,b,c);
     println(HLINE);
 
     return 0;
 end
 
-M	= 20
-
 function checktick()
+    M	= 20
     timesfound = Array(Float64,M);
     t2 = realmax(Float64);
 
@@ -207,8 +212,10 @@ function checktick()
    return convert(Int64, round(minDelta*1.0E6));
 end
 
-function checkSTREAMresults()
-    
+function checkSTREAMresults(a,b,c)
+    global NTIMES;
+    global STREAM_ARRAY_SIZE;
+
 # reproduce initialization
   	aj = 1.0;
   	bj = 2.0;
@@ -217,7 +224,7 @@ function checkSTREAMresults()
   	aj = 2.0E0 * aj;
 # now execute timing loop
   	scalar = 3.0;
-	  for k=1:NTIMES
+	  for k=1:NTIMES::Int64
         cj = aj;
         bj = scalar*cj;
         cj = aj+bj;
@@ -234,16 +241,16 @@ function checkSTREAMresults()
         bSumErr = reduce(+, map(fetch,{ (@spawnat p calcErr(localpart(b),bj)) for p=procs(b) }));
         cSumErr = reduce(+, map(fetch,{ (@spawnat p calcErr(localpart(c),cj)) for p=procs(c) }));
     else
-    	  for j=1:STREAM_ARRAY_SIZE
+    	  for j=1:STREAM_ARRAY_SIZE::Int64
         		aSumErr += abs(a[j] - aj);
 		        bSumErr += abs(b[j] - bj);
         		cSumErr += abs(c[j] - cj);
     	  end
     end
 
-    aAvgErr = aSumErr / STREAM_ARRAY_SIZE;
-  	bAvgErr = bSumErr / STREAM_ARRAY_SIZE;
-  	cAvgErr = cSumErr / STREAM_ARRAY_SIZE;
+    aAvgErr = aSumErr / STREAM_ARRAY_SIZE::Int64;
+  	bAvgErr = bSumErr / STREAM_ARRAY_SIZE::Int64;
+  	cAvgErr = cSumErr / STREAM_ARRAY_SIZE::Int64;
 
     epsilon = 1.e-6;
   	if sizeof(STREAM_TYPE) == 4
@@ -260,7 +267,7 @@ function checkSTREAMresults()
 		    println ("Failed Validation on array a[], AvgRelAbsErr > epsilon (",epsilon,")");
     		println ("     Expected Value: ",aj,", AvgAbsErr: ",aAvgErr,", AvgRelAbsErr: ",abs(aAvgErr)/aj);
     		ierr = 0;
-    		for j=1:STREAM_ARRAY_SIZE
+    		for j=1:STREAM_ARRAY_SIZE::Int64
       			if abs(a[j]/aj-1.0) > epsilon
 			          ierr += 1;
                 if isdefined(:VERBOSE)
@@ -279,7 +286,7 @@ function checkSTREAMresults()
     		println ("     Expected Value: ",bj,", AvgAbsErr: ",bAvgErr,", AvgRelAbsErr: ",abs(bAvgErr)/bj);
     		println ("     AvgRelAbsErr > Epsilon (",epsilon,")");
     		ierr = 0;
-		    for j=1:STREAM_ARRAY_SIZE
+		    for j=1:STREAM_ARRAY_SIZE::Int64
 			      if abs(b[j]/bj-1.0) > epsilon
         				ierr += 1;
                 if isdefined(:VERBOSE)
@@ -298,7 +305,7 @@ function checkSTREAMresults()
     		println ("     Expected Value: ",cj,", AvgAbsErr: ",cAvgErr,", AvgRelAbsErr: ",abs(cAvgErr)/cj);
     		println ("     AvgRelAbsErr > Epsilon (",epsilon,")");
     		ierr = 0;
-    		for j=1:STREAM_ARRAY_SIZE
+    		for j=1:STREAM_ARRAY_SIZE::Int64
       			if abs(c[j]/cj-1.0) > epsilon
         				ierr += 1;
                 if isdefined(:VERBOSE)
@@ -340,9 +347,9 @@ end
 end
 
 ~isdefined(:PARALLEL) ||
-@everywhere function parallel_STREAM_Scale(c::Array,b::Array)
+@everywhere function parallel_STREAM_Scale(c::Array,b::Array,s::Float64)
     for i=1:size(b)[1]
-  	    b[i] = scalar*c[i];
+  	    b[i] = s*c[i];
     end
 end
 
@@ -354,9 +361,9 @@ end
 end
 
 ~isdefined(:PARALLEL) ||
-@everywhere function parallel_STREAM_Triad(b::Array,c::Array,a::Array)
+@everywhere function parallel_STREAM_Triad(b::Array,c::Array,a::Array,s::Float64)
     for i=1:size(a)[1]
-  	    a[i] = b[i]+scalar*c[i];
+  	    a[i] = b[i]+s*c[i];
     end
 end
 
