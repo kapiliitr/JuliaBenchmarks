@@ -2,8 +2,8 @@
 
 #addprocs(4);
 #const PARALLEL=1;
-NTIMES = 3;
-STREAM_ARRAY_SIZE = 5000000;
+const NTIMES = 3;
+const STREAM_ARRAY_SIZE = 5000000;
 
 isdefined(:STREAM_ARRAY_SIZE) || (STREAM_ARRAY_SIZE =	10000000);
 
@@ -15,7 +15,7 @@ end
 
 isdefined(:NTIMES) || (NTIMES =	10);
 isdefined(:OFFSET) || (OFFSET =	0);
-isdefined(:STREAM_TYPE) || (STREAM_TYPE = Float64);
+isdefined(:STREAM_TYPE) || (const STREAM_TYPE = Float64);
 
 isdefined(:MIN) || (MIN(x,y)=((x)<(y)?(x):(y)));
 isdefined(:MAX) || (MAX(x,y)=((x)>(y)?(x):(y)));
@@ -30,9 +30,9 @@ function main()
 
 
     if ~isdefined(:PARALLEL)
-        a = Array(STREAM_TYPE,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
-        b = Array(STREAM_TYPE,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
-        c = Array(STREAM_TYPE,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+        a = fill(1.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+        b = fill(2.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
+        c = fill(0.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
     else
         a = dfill(1.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
         b = dfill(2.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
@@ -84,15 +84,6 @@ function main()
         return -1;
     end
 
-#   Get initial value for system clock.
-    if ~isdefined(:PARALLEL) # because we have already initialised while creating DArray
-        for j=1:STREAM_ARRAY_SIZE::Int64
-            a[j] = 1.0;
-            b[j] = 2.0;
-            c[j] = 0.0;
-        end
-    end
-
     println(HLINE);
 
     if (quantum = checktick()) >= 1 
@@ -126,7 +117,7 @@ function main()
 #   --- MAIN LOOP --- repeat test cases NTIMES times ---
 
     times = Array(Float64,(4,NTIMES::Int64))
-    @everywhere scalar = 3.0;
+    scalar = 3.0;
  
     for k=1:NTIMES::Int64
         if isdefined(:PARALLEL)
