@@ -1,11 +1,26 @@
 #!/nethome/kagarwal39/julia-0.3.1/julia/julia
 
-addprocs(4);
-const PARALLEL = 1;
-const NTIMES = 3;
-const STREAM_ARRAY_SIZE = 5000000;
+isdefined(:STREAM_ARRAY_SIZE) || (const STREAM_ARRAY_SIZE =	10000000);
+isdefined(:NTIMES) || (const NTIMES =	10);
+isdefined(:OFFSET) || (const OFFSET =	0);
+isdefined(:STREAM_TYPE) || (const STREAM_TYPE = Float64);
 
-isdefined(:STREAM_ARRAY_SIZE) || (STREAM_ARRAY_SIZE =	10000000);
+numargs = countnz(ARGS);
+
+if numargs>3
+    println("Invalid number of arguments. ./bfs [STREAM_ARRAY_SIZE NTIMES NUM_WORKERS]");
+    exit(-1);
+end
+if numargs>=1
+    const STREAM_ARRAY_SIZE = parseint(ARGS[1]);
+end
+if numargs>=2
+    const NTIMES = parseint(ARGS[2]);
+end
+if numargs==3
+    const PARALLEL = 1;
+    addprocs(parseint(ARGS[3]));
+end
 
 if isdefined(:NTIMES)
     if NTIMES<=1
@@ -13,14 +28,11 @@ if isdefined(:NTIMES)
     end
 end
 
-isdefined(:NTIMES) || (NTIMES =	10);
-isdefined(:OFFSET) || (OFFSET =	0);
-isdefined(:STREAM_TYPE) || (const STREAM_TYPE = Float64);
-
 isdefined(:MIN) || (MIN(x,y)=((x)<(y)?(x):(y)));
 isdefined(:MAX) || (MAX(x,y)=((x)>(y)?(x):(y)));
 
 function main()
+
     HLINE = "-------------------------------------------------------------";
 
     a = fill(1.0,STREAM_ARRAY_SIZE::Int64+OFFSET::Int64);
@@ -75,7 +87,7 @@ function main()
         println("*****  ERROR: ******");
         println("      The preprocessor variable STREAM_ARRAY_SIZE is not a multiple of the number of worker processes.");
         println("*****  ERROR: ******");
-        return -1;
+        exit(-1);
     end
 
     println(HLINE);
@@ -170,7 +182,7 @@ function main()
     checkSTREAMresults(a,b,c);
     println(HLINE);
 
-    return 0;
+    exit(0);
 end
 
 function checktick()
