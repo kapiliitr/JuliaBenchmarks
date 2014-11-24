@@ -1,0 +1,643 @@
+
+signal (11): Segmentation fault
+unknown function (ip: 0)
+
+signal (11): Segmentation fault
+unknown function (ip: 0)
+
+signal (11): Segmentation fault
+unknown function (ip: 0)
+
+signal (11): Segmentation fault
+unknown function (ip: 0)
+unhandled exception on 1: MemoryError()
+exiting.
+unhandled exception on 1: MemoryError()
+exiting.
+
+signal (13): Broken pipe
+write at /lib64/libpthread.so.0 (unknown line)
+
+signal (13): Broken pipe
+write at /lib64/libpthread.so.0 (unknown line)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19778 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+jlcall_print;19777 at  (unknown line)
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+
+signal (13): Broken pipe
+write at /lib64/libpthread.so.0 (unknown line)
+unknown function (ip: 4201197)
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+
+signal (13): Broken pipe
+write at /lib64/libpthread.so.0 (unknown line)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+
+signal (13): Broken pipe
+write at /lib64/libpthread.so.0 (unknown line)
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+
+signal (13): Broken pipe
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+write at /lib64/libpthread.so.0 (unknown line)
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19782 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19782 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+
+signal (13): Broken pipe
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+
+signal (13): Broken pipe
+.so.0 (unknown line)
+.3.1/julia/src/init.c:1006
+
+signal (13): Broken pipe
+
+signal (13): Broken pipe
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+write at /lib64/libpthread.so.0 (unknown line)
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+
+signal (13): Broken pipe
+write at /lib64/libpthread.so.0 (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+
+signal (13): Broken pipe
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+write at /lib64/libpthread.so.0 (unknown line)
+write at /lib64/libpthread.so.0 (unknown line)
+write at /lib64/libpthread.so.0 (unknown line)
+
+signal (13): Broken pipe
+
+signal (13): Broken pipe
+uv_write2 at /nethome
+signal (13): Broken pipe
+start_task at /nethome/kagarwal39/juli
+signal (13): Broken pipe
+wri
+signal (13): Broken pipe
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+jlcall_print;19782 at  (unknown line)
+
+signal (13): Broken pipe
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19782 at  (unknown line)
+write at /lib64/libpthread.so.0 (unknown line)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+write at /lib64/libpthread.so.0 (unknown line)
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+c/unix/stream.c:798
+print at string.jl:4
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19782 at  (unknown line)
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/srprint at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19782 at  (unknown line)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:5
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+println at string.jl:8
+jlcall_print;19777 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kajl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uvprint at string.jl:4
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19781 at  (unknown line)
+print at ascii.jl:93
+jl_apply at /nethome/kagarwal39/julia-start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+anonymous at task.jl:948
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+unknown function (ip: 4201197)
+unknown function (ip: 4201197)
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+unknown function (ip: 4201197)
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19778 at  (unknown line)
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19782 at  (unknown line)
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19781 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+print at string.jl:4
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+jl_apply at /nethome/kauv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jljl_apply aanonymous at task.jl:948
+println at string.jl:8
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19778 at  (unknown line)
+println at string.jl:8
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+anonymous at task.jl:948
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19781 at  (unknown line)
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19782 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+thome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+unknown function (ip: 4201197)
+unknown function (ip: 4201197)
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+unknown function (ip: 4201197)
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+uv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19777 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+
+signal (13): Broken pipe
+write at /lib64/libpthread.unknown function (ipuv__write at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:798
+uv_write2 at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/stream.c:1343
+jl_write_no_copy at /nethome/kagarwal39/julia-0.3.1/julia/src/jl_uv.c:577
+write at stream.jl:732
+print at ascii.jl:93
+jlcall_print;19781 at  (unknown line)
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+print at string.jl:4
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/builtins.c:332
+println at string.jl:5
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+println at string.jl:8
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+anonymous at task.jl:948
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+switch_stack at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:207
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
+Master process (id 1) could not connect within 60.0 seconds.
+exiting.
