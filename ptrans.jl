@@ -1,8 +1,9 @@
 #!/nethome/kagarwal39/julia-0.3.1/julia/julia
 
-r=3;
-c=2;
-
+const P=6;
+const Q=16;
+const ROW=2400;
+const COL=2400;
 
 isdefined(:P) || (const P = 2); #Number of process in x dimension
 isdefined(:Q) || (const Q = 3); #Number of processes in y dimension
@@ -10,6 +11,11 @@ isdefined(:ROW) || (const ROW = 30); #Number of rows in matrix
 isdefined(:COL) || (const COL = 30); #Number of columns in matrix
 isdefined(:r) || (const r = 5); #Number of rows in a block
 isdefined(:c) || (const c = 5); #Number of rows in a block
+
+if r!=c
+  println("Only square blocks supported yet.");
+  exit(0);
+end
 
 if(mod(ROW,P*r)!=0 || mod(COL,Q*c)!=0)
   println("ERROR : Rows and columns are not exactly divisible into the blocks and workers.");
@@ -94,7 +100,6 @@ function verifyTrans(matA::Array,matB::Array,R::Int64,C::Int64)
   for i = 1:R
     for j = 1:C
       if matB[j,i] != matA[i,j]
-        @printf("i=%d j=%d\n",i,j);
         correct = 0;
         break;
       end
@@ -114,7 +119,6 @@ end
 @everywhere function store(matB::Array,trans::Array,b_x::Int64,b_y::Int64,r::Int64,c::Int64)
   for i = 1:r
     for j = 1:c
-      @printf("myid=%d x=%d y=%d\n",myid(),b_x*r+i,b_y*c+j);
       matB[b_x * r + i,b_y * c + j] = trans[i,j]; 
     end
   end
@@ -152,7 +156,6 @@ end
       new_y_b = ifloor((new_y - 1)/Q);
       
       next_pid = new_x_t + new_y_t * P + 2;
-      @printf("myid=%d next_pid=%d new_x_b=%d new_y_b=%d",myid(),next_pid,new_x_b,new_y_b);
       @spawnat next_pid store(localpart(matB),transTemp,new_x_b,new_y_b,c,r);
     end
   end
