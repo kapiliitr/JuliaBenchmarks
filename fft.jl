@@ -1,7 +1,16 @@
-A=[1,2,1,1,2,1,3,4]
-B=zeros(Complex,length(A))
-@everywhere N=length(A)
-P=4
+if(length(ARGS)!=2)
+	println("Usage : julia fft.jl <N> <P>")
+	quit()
+end
+
+N=parseint(ARGS[1])
+P=parseint(ARGS[2])
+
+if((ceil(log2(N))-log2(N))!=0 && (ceil(log2(P))-log2(P))!=0)
+	println("N and P must be powers of two!")
+	quit()
+end
+
 addprocs(P)
 
 function getBit(x,i)
@@ -20,23 +29,6 @@ function reverseBits(x,N)
         x
 end
 
-for i=0:nprocs()-2
-        X=Array((Number,Number),convert(Integer,N/(nprocs()-1)))
-       	count=1
-        for j=i*(N/(nprocs()-1)):(i+1)*(N/(nprocs()-1))-1
-                X[count]=(reverseBits(j,log2(N)),convert(Complex,A[reverseBits(j,log2(N))+1]))
-                count+=1
-        end   
-        Y=sort(X)
-        count=1
-        for j=i*(N/(nprocs()-1)):(i+1)*(N/(nprocs()-1))-1
-              	B[j+1]=Y[count][2]
-               	count+=1
-        end
-end
-
-D=distribute(B)
-
 @everywhere function localComputation(D::DArray)
 	A=fft(localpart(D))
 	localpart(D)[1]=A[1]
@@ -46,10 +38,6 @@ D=distribute(B)
 
 	
 end
-
-ref=[@spawnat p localComputation(D) for p in procs(D)]
-Aux=zeros(Complex,N)
-Aux=distribute(Aux)
 
 @everywhere function fetch_data(D::DArray)
         return localpart(D)
@@ -89,13 +77,6 @@ end
 	end
 end
 
-for r=1:convert(Integer,log2(P))
-
-	@sync {@spawnat p parallel_fft(D,r,Aux) for p in procs(D)}
-
-	@sync {@spawnat p copy_array(D,Aux) for p in procs(D)}
-
-end
 
 function verify()
 	seq_fft=fft(A)
@@ -110,18 +91,55 @@ function verify()
 		for i = 1:length(par_fft)
 			if(abs(par_fft[i]-seq_fft[i])>0.01)
 				println("WRONG Result")
-				println(seq_fft)
-				println(par_fft)
+				#println(seq_fft)
+				#println(par_fft)
 				flag=1
 				break
 			end
 		end
 
 		if(flag==0)
-			println("GOOD Job!")
+			println("Result is correct!")
 		end
 	end
 
 end
 
+A=rand(N)
+B=zeros(Complex,length(A))
+
+for i=0:nprocs()-2
+        X=Array((Number,Number),convert(Integer,N/(nprocs()-1)))
+       	count=1
+        for j=i*(N/(nprocs()-1)):(i+1)*(N/(nprocs()-1))-1
+                X[count]=(reverseBits(j,log2(N)),convert(Complex,A[reverseBits(j,log2(N))+1]))
+                count+=1
+        end   
+        Y=sort(X)
+        count=1
+        for j=i*(N/(nprocs()-1)):(i+1)*(N/(nprocs()-1))-1
+              	B[j+1]=Y[count][2]
+               	count+=1
+        end
+end
+
+D=distribute(B)
+
+#Local computation of chunks at each processor
+time_1=@elapsed @sync {@spawnat p localComputation(D) for p in procs(D)}
+
+Aux=zeros(Complex,N)
+Aux=distribute(Aux)
+
+# Communication between processors
+time_2=@elapsed for r=1:convert(Integer,log2(P))
+
+	@sync {@spawnat p parallel_fft(D,r,Aux) for p in procs(D)}
+
+	@sync {@spawnat p copy_array(D,Aux) for p in procs(D)}
+
+end
+
 verify()
+
+println("Time taken : ",time_1+time_2)
