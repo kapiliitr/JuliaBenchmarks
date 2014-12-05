@@ -1,4 +1,4 @@
-include("iridis_launcher.jl")
+include("../iridis_launcher.jl")
 
 if(length(ARGS)!=2)
 	println("Usage : julia fft.jl <N> <P>")

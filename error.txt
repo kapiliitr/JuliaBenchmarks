@@ -641,3 +641,23 @@ Master process (id 1) could not connect within 60.0 seconds.
 exiting.
 Master process (id 1) could not connect within 60.0 seconds.
 exiting.
+
+signal (15): Terminated
+syscall at /lib64/libc.so.6 (unknown line)
+uv__epoll_wait at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/linux-syscalls.c:316
+uv__io_poll at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/linux-core.c:211
+uv_run at /nethome/kagarwal39/julia-0.3.1/julia/deps/libuv/src/unix/core.c:295
+process_events at ./stream.jl:537
+wait at ./task.jl:273
+task_done_hook at task.jl:83
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1429
+throw_internal at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:743
+jl_rethrow at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:756
+wait at ./task.jl:200
+jl_apply at /nethome/kagarwal39/julia-0.3.1/julia/src/gf.c:1431
+anonymous at task.jl:513
+start_task at /nethome/kagarwal39/julia-0.3.1/julia/src/task.c:427
+julia_trampoline at /nethome/kagarwal39/julia-0.3.1/julia/src/init.c:1006
+unknown function (ip: 4201197)
+__libc_start_main at /lib64/libc.so.6 (unknown line)
+unknown function (ip: 4199257)

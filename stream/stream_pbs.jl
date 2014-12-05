@@ -1,32 +1,27 @@
-#!/nethome/kagarwal39/julia-0.3.1/julia/julia
 
-isdefined(:STREAM_ARRAY_SIZE) || (const STREAM_ARRAY_SIZE =	10000000);
+println("Started julia on iridis")
+
+include("iridis_launcher.jl")
+
+bind_iridis_procs()
+
+# here a function that runs your estimation:
+# using MOpt, mig
+
+# require some code on all nodes
+require("../incl.jl")
+
+println("make everybody say hello")
+
+@everywhere sayhello()
+
+
+isdefined(:STREAM_ARRAY_SIZE) || (const STREAM_ARRAY_SIZE =	64000000);
 isdefined(:NTIMES) || (const NTIMES =	10);
 isdefined(:OFFSET) || (const OFFSET =	0);
 isdefined(:STREAM_TYPE) || (const STREAM_TYPE = Float64);
 
-numargs = countnz(ARGS);
-
-if numargs>3
-    println("Invalid number of arguments. ./bfs [STREAM_ARRAY_SIZE NTIMES NUM_WORKERS]");
-    exit(-1);
-end
-if numargs>=1
-    const STREAM_ARRAY_SIZE = parseint(ARGS[1]);
-end
-if numargs>=2
-    const NTIMES = parseint(ARGS[2]);
-end
-if numargs==3
-    const PARALLEL = 1;
-    addprocs(parseint(ARGS[3]));
-end
-
-if isdefined(:NTIMES)
-    if NTIMES<=1
-        NTIMES	= 10;
-    end
-end
+const PARALLEL = 1;
 
 isdefined(:MIN) || (MIN(x,y)=((x)<(y)?(x):(y)));
 isdefined(:MAX) || (MAX(x,y)=((x)>(y)?(x):(y)));
@@ -376,3 +371,7 @@ end
 
 # Calling the main function
 main()
+
+println(" quitting ")
+
+quit()

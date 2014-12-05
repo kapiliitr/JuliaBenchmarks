@@ -1,9 +1,10 @@
-#!/nethome/kagarwal39/julia-0.3.1/julia/julia
+#!/nethome/kagarwal39/julia-0.3.3/julia/julia
 
-const P=6;
-const Q=16;
-const ROW=2400;
-const COL=2400;
+#const P=8;
+#const Q=6;
+#const ROW=480;
+#const COL=480;
+const NTIMES=2;
 
 isdefined(:P) || (const P = 2); #Number of process in x dimension
 isdefined(:Q) || (const Q = 3); #Number of processes in y dimension
@@ -11,6 +12,8 @@ isdefined(:ROW) || (const ROW = 30); #Number of rows in matrix
 isdefined(:COL) || (const COL = 30); #Number of columns in matrix
 isdefined(:r) || (const r = 5); #Number of rows in a block
 isdefined(:c) || (const c = 5); #Number of rows in a block
+
+isdefined(:NTIMES) || (const NTIMES = 10); #Number of rows in a block
 
 if r!=c
   println("Only square blocks supported yet.");
@@ -34,9 +37,8 @@ function distribute(a::AbstractArray, pids, dist)
   end
 end
 
-function main()
+function ptrans(matA::Array,P::Int64,Q::Int64,ROW::Int64,COL::Int64,r::Int64,c::Int64)
 
-  matA = rand(ROW,COL); #Initial matrix to be transposed
   matB = Array(Float64,(ROW,COL)); #Matrix containing the transpose
   matTemp = Array(Float64,(ROW,COL)); #Temproray matrix
   matT = Array(Float64,(ROW,COL));
@@ -90,8 +92,13 @@ function main()
     end
   end
 
-  verifyTrans(matOrig,matT,ROW,COL);
- 
+#  if verifyTrans(matOrig,matT,ROW,COL) == 1
+     return matT;
+#  else
+#    println("Matrix transpose failed");
+#    exit(0);
+#  end
+  
 end
 
 function verifyTrans(matA::Array,matB::Array,R::Int64,C::Int64)
@@ -109,11 +116,7 @@ function verifyTrans(matA::Array,matB::Array,R::Int64,C::Int64)
     end
   end
 
-  if correct == 1
-    println("Result passed.");
-  else
-    println("Transpose failed.");
-  end
+  return correct;
 end
 
 @everywhere function store(matB::Array,trans::Array,b_x::Int64,b_y::Int64,r::Int64,c::Int64)
@@ -159,6 +162,45 @@ end
       @spawnat next_pid store(localpart(matB),transTemp,new_x_b,new_y_b,c,r);
     end
   end
+end
+
+function main()
+  
+  matA = rand(ROW::Int64,COL::Int64); # matrix to be transposed
+  matB = rand(COL::Int64,ROW::Int64); # matrix to be transposed
+  matC = Array(Float64,(ROW::Int64,ROW::Int64)); # matrix containing the product
+  
+  transMatA = Array(Float64,(COL::Int64,ROW::Int64));
+  transMatB = Array(Float64,(ROW::Int64,COL::Int64));
+  transMatC = Array(Float64,(COL::Int64,COL::Int64));
+
+  times = zeros(Float64,(2,NTIMES::Int64));
+  for i = 1:NTIMES::Int64
+    times[1,i] += @elapsed { transMatA = ptrans(matA,P::Int64,Q::Int64,ROW::Int64,COL::Int64,r::Int64,c::Int64) };
+    times[1,i] += @elapsed { transMatB = ptrans(matA,Q::Int64,P::Int64,COL::Int64,ROW::Int64,c::Int64,r::Int64) };
+    times[1,i] += @elapsed BLAS.gemm!('N', 'N', 1.0, transMatA, transMatB, 0.0, transMatC);
+  end
+
+  for i = 1:NTIMES::Int64
+    times[2,i] = @elapsed BLAS.gemm!('N', 'N', 1.0, matA, matB, 0.0, matC);
+  end
+
+  avgtime = fill(0.0,2);
+  gflops = Array(Float64,2);
+  for i = 2:NTIMES::Int64
+    for j = 1:2
+      avgtime[j] += times[j,i];
+    end
+  end
+
+  for j = 1:2
+    avgtime[j] = avgtime[j]/(NTIMES::Int64-1);
+  end
+  
+  gflops[1] = ( 2 * COL * ROW * COL * 1.0E-09 )/ avgtime[1];
+  gflops[2] = ( 2 * ROW * COL * ROW * 1.0E-09 )/ avgtime[2];
+  @printf("DGEMM Trans : %f Gflops ; DGEMM : %f Gflops\n",gflops[1],gflops[2]);
+
 end
 
 # Calling the main function
