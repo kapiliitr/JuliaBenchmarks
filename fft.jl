@@ -1,3 +1,5 @@
+include("iridis_launcher.jl")
+
 if(length(ARGS)!=2)
 	println("Usage : julia fft.jl <N> <P>")
 	quit()
@@ -6,12 +8,12 @@ end
 N=parseint(ARGS[1])
 P=parseint(ARGS[2])
 
-if((ceil(log2(N))-log2(N))!=0 && (ceil(log2(P))-log2(P))!=0)
-	println("N and P must be powers of two!")
+bind_iridis_procs(P)
+
+if((ceil(log2(N))-log2(N))!=0 && (ceil(log2(nprocs()-1))-log2(nprocs()-1))!=0)
+	println("Array size(N) and Number of Processes must be powers of two!")
 	quit()
 end
-
-addprocs(P)
 
 function getBit(x,i)
 	z= convert(Uint64,x)>>convert(Uint64,i)
@@ -91,8 +93,8 @@ function verify()
 		for i = 1:length(par_fft)
 			if(abs(par_fft[i]-seq_fft[i])>0.01)
 				println("WRONG Result")
-				#println(seq_fft)
-				#println(par_fft)
+				println(seq_fft)
+				println(par_fft)
 				flag=1
 				break
 			end
@@ -132,7 +134,7 @@ Aux=zeros(Complex,N)
 Aux=distribute(Aux)
 
 # Communication between processors
-time_2=@elapsed for r=1:convert(Integer,log2(P))
+time_2=@elapsed for r=1:convert(Integer,log2(nprocs()-1))
 
 	@sync {@spawnat p parallel_fft(D,r,Aux) for p in procs(D)}
 
@@ -143,3 +145,4 @@ end
 verify()
 
 println("Time taken : ",time_1+time_2)
+println("Number of processes : ",nprocs()-1)
