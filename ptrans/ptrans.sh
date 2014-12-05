@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -S /bin/bash
 #PBS -q class
-#PBS -l nodes=7
+#PBS -l nodes=8
 #PBS -l walltime=10:00
 #PBS -o ptrans.out
 #PBS -e ptrans.err
@@ -24,4 +24,4 @@ echo "check library path has gcc/4.8.1/lib64 libraries"
 echo $LD_LIBRARY_PATH
 
 echo "calling julia now"
-/nethome/kagarwal39/julia-0.3.3/julia/julia ptrans.jl 
+/nethome/kagarwal39/julia-0.3.3/julia/julia ptrans_pbs.jl 

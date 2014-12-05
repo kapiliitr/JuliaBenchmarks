@@ -1,14 +1,11 @@
 include("../iridis_launcher.jl")
 
-const P=2;
-const Q=4;
-const r=40;
-const c=40;
-bind_iridis_procs(1);
+bind_iridis_procs(16);
 
-const ROW=480;
-const COL=480;
-const NTIMES=2;
+const P = 6;
+const Q = 16;
+const ROW = 480;
+const COL = 480;
 
 isdefined(:P) || (const P = 2); #Number of process in x dimension
 isdefined(:Q) || (const Q = 3); #Number of processes in y dimension
@@ -16,8 +13,6 @@ isdefined(:ROW) || (const ROW = 30); #Number of rows in matrix
 isdefined(:COL) || (const COL = 30); #Number of columns in matrix
 isdefined(:r) || (const r = 5); #Number of rows in a block
 isdefined(:c) || (const c = 5); #Number of rows in a block
-
-isdefined(:NTIMES) || (const NTIMES = 10); #Number of rows in a block
 
 if r!=c
   println("Only square blocks supported yet.");
@@ -41,8 +36,9 @@ function distribute(a::AbstractArray, pids, dist)
   end
 end
 
-function ptrans(matA::Array,P::Int64,Q::Int64,ROW::Int64,COL::Int64,r::Int64,c::Int64)
-
+function main()
+  println("Inside main")  
+  matA = rand(ROW,COL); #Initial matrix to be transposed
   matB = Array(Float64,(ROW,COL)); #Matrix containing the transpose
   matTemp = Array(Float64,(ROW,COL)); #Temproray matrix
   matT = Array(Float64,(ROW,COL));
@@ -75,7 +71,7 @@ function ptrans(matA::Array,P::Int64,Q::Int64,ROW::Int64,COL::Int64,r::Int64,c::
   matA = distribute(matA,[2:nworkers()+1],[P,Q]);
   matB = distribute(matB,[2:nworkers()+1],[P,Q]);
 
-  timeTrans = @elapsed @sync { (@spawnat proc dotrans(localpart(matA),matB,P,Q,r,c)) for proc = procs(matA) }
+  @time @sync { (@spawnat proc dotrans(localpart(matA),matB,P,Q,r,c)) for proc = procs(matA) }
 
   for i = 1:row_b
     for j = 1:col_b
@@ -96,13 +92,8 @@ function ptrans(matA::Array,P::Int64,Q::Int64,ROW::Int64,COL::Int64,r::Int64,c::
     end
   end
 
-  if verifyTrans(matOrig,matT,ROW,COL) == 1
-     return timeTrans;
-  else
-    println("Matrix transpose failed");
-    exit(0);
-  end
-  
+  verifyTrans(matOrig,matT,ROW,COL);
+ 
 end
 
 function verifyTrans(matA::Array,matB::Array,R::Int64,C::Int64)
@@ -120,7 +111,11 @@ function verifyTrans(matA::Array,matB::Array,R::Int64,C::Int64)
     end
   end
 
-  return correct;
+  if correct == 1
+    println("Result passed.");
+  else
+    println("Transpose failed.");
+  end
 end
 
 @everywhere function store(matB::Array,trans::Array,b_x::Int64,b_y::Int64,r::Int64,c::Int64)
@@ -168,25 +163,7 @@ end
   end
 end
 
-function main()
-  
-  matA = rand(ROW::Int64,COL::Int64); # matrix to be transposed
-  
-  times = zeros(Float64,NTIMES::Int64);
-  for i = 1:NTIMES::Int64
-    times[i] = ptrans(matA,P::Int64,Q::Int64,ROW::Int64,COL::Int64,r::Int64,c::Int64);
-  end
-
-  avgtime = 0.0;
-  for i = 2:NTIMES::Int64
-    avgtime += times[i];
-  end
-
-  avgtime = avgtime/(NTIMES::Int64-1);
-  
-  @printf("Time Trans : %f sec\n",avgtime);
-
-end
-
 # Calling the main function
 main()
+
+quit()

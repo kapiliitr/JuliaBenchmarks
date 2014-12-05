@@ -1,20 +1,7 @@
+include("../iridis_launcher.jl")
 
-println("Started julia on iridis")
-
-include("iridis_launcher.jl")
-
-bind_iridis_procs()
-
-# here a function that runs your estimation:
-# using MOpt, mig
-
-# require some code on all nodes
-require("../incl.jl")
-
-println("make everybody say hello")
-
-@everywhere sayhello()
-
+bind_iridis_procs(4);
+const NTIMES = 5;
 
 isdefined(:STREAM_ARRAY_SIZE) || (const STREAM_ARRAY_SIZE =	64000000);
 isdefined(:NTIMES) || (const NTIMES =	10);
@@ -78,6 +65,7 @@ function main()
     println(" The *best* time for each kernel (excluding the first iteration)"); 
     println(" will be used to compute the reported bandwidth.");
 
+    println(nworkers()," number of workers");
     if mod(STREAM_ARRAY_SIZE::Int64,nworkers()) != 0
         println("*****  ERROR: ******");
         println("      The preprocessor variable STREAM_ARRAY_SIZE is not a multiple of the number of worker processes.");
@@ -371,7 +359,5 @@ end
 
 # Calling the main function
 main()
-
-println(" quitting ")
 
 quit()
