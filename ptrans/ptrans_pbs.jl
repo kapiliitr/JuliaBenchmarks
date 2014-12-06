@@ -1,13 +1,11 @@
 include("../iridis_launcher.jl")
 
-const P=2;
-const Q=4;
-const r=40;
-const c=40;
-bind_iridis_procs(1);
+const P=6;
+const Q=6;
+bind_iridis_procs(Q);
 
-const ROW=480;
-const COL=480;
+const ROW=600;
+const COL=600;
 const NTIMES=2;
 
 isdefined(:P) || (const P = 2); #Number of process in x dimension

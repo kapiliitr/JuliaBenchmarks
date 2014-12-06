@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -S /bin/bash
 #PBS -q class
-#PBS -l nodes=8
+#PBS -l nodes=5
 #PBS -l walltime=10:00
 #PBS -o ptrans.out
 #PBS -e ptrans.err
